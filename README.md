@@ -261,3 +261,6 @@ kubectl get svc -n monitoring
 # Access Grafana: http://<Node-IP>:<NodePort>
 
 # Access Prometheus: http://<Node-IP>:<NodePort>
+
+![DevOps Portfolio](images1/devops-portfolio.png)
+
