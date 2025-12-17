@@ -155,36 +155,109 @@ aws eks update-kubeconfig --name devops-portfolio-eks --region us-east-1
 ```bash
 
 kubectl get pods -n kube-system | grep aws-load-balancer-controller
-
 kubectl describe sa aws-load-balancer-controller -n kube-system
-
 kubectl logs -n kube-system <alb-pod-name>
 
 ```
 
-# Kubernetes Deployment & Service
+# Kubernetes Deployment &
+
+```bash
+
 kubectl apply -f k8s/deployment.yaml
-
 kubectl apply -f k8s/service.yaml
-
 kubectl get pods
-
 kubectl get svc
-
 kubectl get endpoints
+
+```
 
 # Kubernetes Ingress 
 
+```bash
+
 kubectl apply -f k8s/ingress.yaml
-
 kubectl get ingress
-
 kubectl describe ingress <ingress-name>
+
+```
 
 # Troubleshooting
 
+```bash
+
 kubectl get events -n kube-system
-
 kubectl describe pod <pod-name> -n kube-system
-
 kubectl logs <pod-name> -n kube-system
+
+```
+
+# Prometheus & Grafana Installation on Kubernetes:
+
+# Add Prometheus Community Helm repo
+
+```bash
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+```
+
+# Add Grafana Helm repo (optional if using kube-prometheus-stack)
+
+```
+
+helm repo add grafana https://grafana.github.io/helm-charts
+
+```
+
+# Update repos
+
+```
+
+helm repo update
+
+```
+
+
+# Install Prometheus & Grafana via kube-prometheus-stack
+
+The kube-prometheus-stack chart installs Prometheus, Alertmanager, Node Exporter, and Grafana all together.
+
+```bash
+
+helm install monitoring-stack prometheus-community/kube-prometheus-stack \
+  --namespace monitoring --create-namespace
+
+```
+
+# Check the installed services:
+
+```bash
+
+kubectl get svc -n monitoring
+kubectl get pods -n monitoring
+
+```
+
+# Using NodePort
+
+Patch the service to NodePort:
+
+```bash
+
+kubectl patch svc monitoring-stack-grafana -n monitoring -p '{"spec": {"type": "NodePort"}}'
+kubectl patch svc monitoring-stack-kube-prom-prometheus -n monitoring -p '{"spec": {"type": "NodePort"}}'
+
+```
+
+Get the NodePort:
+
+```bash
+
+kubectl get svc -n monitoring
+
+```
+
+# Access Grafana: http://<Node-IP>:<NodePort>
+
+# Access Prometheus: http://<Node-IP>:<NodePort>
