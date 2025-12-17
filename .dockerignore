@@ -1,0 +1,19 @@
+# Node modules (we install fresh inside Docker)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Git files
+.git
+.gitignore
+
+# Build outputs
+build
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode
+*.code-workspace
