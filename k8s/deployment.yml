@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-portfolio-deployment
+  labels:
+    app: devops-portfolio
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-portfolio
+  template:
+    metadata:
+      labels:
+        app: devops-portfolio
+    spec:
+      containers:
+        - name: devops-portfolio
+          image: 596660701410.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio:latest
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
