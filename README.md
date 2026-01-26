@@ -36,7 +36,7 @@ terraform apply -auto-approve
 
 Create a folder k8s/ at the root of the project:
 
-``bash
+```bash
 
 mkdir k8s
 
